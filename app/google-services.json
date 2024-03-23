@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "155266253426",
+    "firebase_url": "https://vega-cafe-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "vega-cafe",
+    "storage_bucket": "vega-cafe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:155266253426:android:958b984edc0a05f7a0f8eb",
+        "android_client_info": {
+          "package_name": "com.example.food2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChuk0bvEjMOtn6pl-TaXTSNh1H1KuAOTM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:155266253426:android:0125c32a22c5fc7ca0f8eb",
+        "android_client_info": {
+          "package_name": "com.example.foodapp_test"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChuk0bvEjMOtn6pl-TaXTSNh1H1KuAOTM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
