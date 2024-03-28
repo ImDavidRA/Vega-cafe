@@ -60,24 +60,24 @@ public class MainActivity extends BaseActivity {
     }
 
     private void setVariable() {
-        binding.logoutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                finish();
+        binding.logoutBtn.setOnClickListener(v -> {
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            finish();
+        });
+        binding.searchBtn.setOnClickListener(v -> {
+            String text = binding.searchEdt.getText().toString();
+            if(!text.isEmpty()) {
+                Intent intent = new Intent(MainActivity.this, ListFoodsActivity.class);
+                intent.putExtra("text", text);
+                intent.putExtra("isSearch", true);
+                startActivity(intent);
             }
         });
-        binding.searchBtn.setOnClickListener(new View.OnClickListener() {
+        binding.cartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String text = binding.searchEdt.getText().toString();
-                if(!text.isEmpty()) {
-                    Intent intent = new Intent(MainActivity.this, ListFoodsActivity.class);
-                    intent.putExtra("text", text);
-                    intent.putExtra("isSearch", true);
-                    startActivity(intent);
-                }
+                startActivity(new Intent(MainActivity.this, CartActivity.class));
             }
         });
     }
