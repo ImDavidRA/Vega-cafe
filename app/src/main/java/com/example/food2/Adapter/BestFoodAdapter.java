@@ -41,8 +41,6 @@ public class BestFoodAdapter extends RecyclerView.Adapter<BestFoodAdapter.viewho
     public void onBindViewHolder(@NonNull BestFoodAdapter.viewholder holder, int position) {
         holder.titleTxt.setText(items.get(position).getTitle());
         holder.priceTxt.setText(items.get(position).getPrice() + "€");
-        holder.timeTxt.setText(items.get(position).getTimeValue() + " min");
-        holder.starTxt.setText("" + items.get(position).getStar());
 
         Glide.with(context)
                 .load(items.get(position).getImagePath())
@@ -68,8 +66,6 @@ public class BestFoodAdapter extends RecyclerView.Adapter<BestFoodAdapter.viewho
             super(itemView);
             titleTxt=itemView.findViewById(R.id.titleTxt);
             priceTxt=itemView.findViewById(R.id.priceTxt);
-            starTxt=itemView.findViewById(R.id.starTxt);
-            timeTxt=itemView.findViewById(R.id.timeTxt);
             pic=itemView.findViewById(R.id.pic);
         }
     }

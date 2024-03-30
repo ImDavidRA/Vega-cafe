@@ -2,11 +2,9 @@ package com.example.food2.Activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.RelativeLayout;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -23,15 +21,14 @@ import com.example.food2.TestFragments.SettingsFragment;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 
-public class TEST extends AppCompatActivity {
+public class ActivityPrincipal extends BaseActivity {
 
     MeowBottomNavigation bottomNavigation;
     RelativeLayout main_layout;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
-
 
         EdgeToEdge.enable(this);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main_layout), (v, insets) -> {
@@ -40,13 +37,14 @@ public class TEST extends AppCompatActivity {
             return insets;
         });
 
-        main_layout = findViewById(R.id.main_layout);
-
         replace(new HomeFragment());
-        main_layout.setBackgroundColor(Color.parseColor("#FF5722"));
+
+        main_layout = findViewById(R.id.main_layout);
 
         // Creamos objeto con el id bottomNavigation
         bottomNavigation = findViewById(R.id.bottomNavigation);
+        bottomNavigation.setBackgroundColor(Color.parseColor("#00000000"));
+        bottomNavigation.setBackgroundColor(Color.argb(0, 0, 0, 0));
 
         // Default en el que iniciará
         bottomNavigation.show(1,true);
@@ -73,28 +71,24 @@ public class TEST extends AppCompatActivity {
                     case 1:
 
                         replace(new HomeFragment());
-                        main_layout.setBackgroundColor(Color.parseColor("#FF5722"));
 
                         break;
 
                     case 2:
 
                         replace(new CartFragment());
-                        main_layout.setBackgroundColor(Color.parseColor("#009688"));
 
                         break;
 
                     case 3:
 
                         replace(new ProfileFragment());
-                        main_layout.setBackgroundColor(Color.parseColor("#FFDE59"));
 
                         break;
 
                     case 4:
 
                         replace(new SettingsFragment());
-                        main_layout.setBackgroundColor(Color.parseColor("#03A9F4"));
 
                         break;
                 }

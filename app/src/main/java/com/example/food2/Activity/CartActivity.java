@@ -18,6 +18,8 @@ import com.example.food2.Helper.ManagmentCart;
 import com.example.food2.R;
 import com.example.food2.databinding.ActivityCartBinding;
 
+import java.text.DecimalFormat;
+
 public class CartActivity extends BaseActivity {
 
     private ActivityCartBinding binding;
@@ -26,7 +28,7 @@ public class CartActivity extends BaseActivity {
     private double impuesto;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         binding=ActivityCartBinding.inflate(getLayoutInflater());
@@ -67,13 +69,19 @@ public class CartActivity extends BaseActivity {
 
         impuesto = Math.round(managmentCart.getTotalFee() * porcentImpuesto * 100.0) / 100;
 
-        double total = Math.round((managmentCart.getTotalFee() + impuesto) * 100) / 100;
+        double total = managmentCart.getTotalFee() + impuesto;
 
-        double itemTotal = Math.round(managmentCart.getTotalFee()*100)/100;
+        DecimalFormat df = new DecimalFormat("#.##");
+        df.setMinimumFractionDigits(2);
+        df.setMaximumFractionDigits(2);
 
-        binding.totalFeeTxt.setText(itemTotal+"€");
-        binding.impuestoTxt.setText(impuesto+"€");
-        binding.totalTxt.setText(total+"€");
+        String itemTotalFormatted = df.format(managmentCart.getTotalFee());
+        String impuestoFormatted = df.format(impuesto);
+        String totalFormatted = df.format(total);
+
+        binding.totalFeeTxt.setText(itemTotalFormatted + "€");
+        binding.impuestoTxt.setText(impuestoFormatted + "€");
+        binding.totalTxt.setText(totalFormatted + "€");
     }
 
     private void setVariable() {

@@ -23,7 +23,7 @@ public class DetailActivity extends BaseActivity {
     private ManagmentCart managmentCart;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         binding = ActivityDetailBinding.inflate(getLayoutInflater());

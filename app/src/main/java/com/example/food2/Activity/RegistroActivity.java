@@ -24,7 +24,7 @@ public class RegistroActivity extends BaseActivity {
     ActivityRegistroBinding binding;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         binding = ActivityRegistroBinding.inflate(getLayoutInflater());
@@ -63,7 +63,7 @@ public class RegistroActivity extends BaseActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
                         Log.i(TAG, "onComplete: ");
-                        startActivity(new Intent(RegistroActivity.this, MainActivity.class));
+                        startActivity(new Intent(RegistroActivity.this, ActivityPrincipal.class));
                     } else {
                         Log.i(TAG, "failure: ");
                         Toast.makeText(RegistroActivity.this, "Error en Credenciales", Toast.LENGTH_SHORT).show();

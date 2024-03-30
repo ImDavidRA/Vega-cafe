@@ -18,7 +18,7 @@ public class IntroActivity extends BaseActivity {
     ActivityIntroBinding binding;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         binding=ActivityIntroBinding.inflate(getLayoutInflater());
@@ -45,7 +45,7 @@ public class IntroActivity extends BaseActivity {
     private void setVariable() {
         binding.loginBtn.setOnClickListener(v -> {
             if(mAuth.getCurrentUser()!=null){
-                startActivity(new Intent(IntroActivity.this, MainActivity.class));
+                startActivity(new Intent(IntroActivity.this, ActivityPrincipal.class));
             } else {
                 startActivity(new Intent(IntroActivity.this, LoginActivity.class));
             }
