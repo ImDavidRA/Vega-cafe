@@ -67,6 +67,7 @@ public class CartFragment extends Fragment {
         if(managmentCart.getListCart(uid).isEmpty()){
             binding.emptyTxt.setVisibility(View.VISIBLE);
             binding.scrollViewCart.setVisibility(View.GONE);
+
         } else {
             binding.emptyTxt.setVisibility(View.GONE);
             binding.scrollViewCart.setVisibility(View.VISIBLE);
