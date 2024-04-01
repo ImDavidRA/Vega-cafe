@@ -17,6 +17,7 @@ import com.example.food2.Domain.Foods;
 import com.example.food2.Helper.ChangeNumberItemsListener;
 import com.example.food2.Helper.ManagmentCart;
 import com.example.food2.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
@@ -25,10 +26,14 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.viewholder> {
     ArrayList<Foods> list;
     private ManagmentCart managmentCart;
     ChangeNumberItemsListener changeNumberItemsListener;
+    private String uid;
 
     public CartAdapter(ArrayList<Foods> list, Context context, ChangeNumberItemsListener changeNumberItemsListener) {
         this.list = list;
-        managmentCart = new ManagmentCart(context);
+
+        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        managmentCart = new ManagmentCart(context, uid);
         this.changeNumberItemsListener = changeNumberItemsListener;
     }
 

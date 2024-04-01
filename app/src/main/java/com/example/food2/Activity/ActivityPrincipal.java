@@ -17,6 +17,7 @@ import com.example.food2.TestFragments.CartFragment;
 import com.example.food2.TestFragments.HomeFragment;
 import com.example.food2.TestFragments.ProfileFragment;
 import com.example.food2.TestFragments.SettingsFragment;
+import com.google.firebase.auth.FirebaseAuth;
 
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
@@ -25,6 +26,7 @@ public class ActivityPrincipal extends BaseActivity {
 
     MeowBottomNavigation bottomNavigation;
     RelativeLayout main_layout;
+    String uidUser;
     HomeFragment InicioFragment;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,12 +40,7 @@ public class ActivityPrincipal extends BaseActivity {
             return insets;
         });
 
-        String idUser = getIntent().getStringExtra("clave_string");
-
-        HomeFragment InicioFragment = new HomeFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("clave_string", idUser);
-        InicioFragment.setArguments(bundle);
+        uidUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         replace(new HomeFragment());
 

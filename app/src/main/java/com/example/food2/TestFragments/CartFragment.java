@@ -16,6 +16,7 @@ import com.example.food2.Adapter.CartAdapter;
 import com.example.food2.Helper.ManagmentCart;
 import com.example.food2.R;
 import com.example.food2.databinding.FragmentCartBinding;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.DecimalFormat;
@@ -27,6 +28,7 @@ public class CartFragment extends Fragment {
     private RecyclerView.Adapter adapter;
     private ManagmentCart managmentCart;
     private double impuesto;
+    private String uid;
 
     public CartFragment() {
     }
@@ -41,13 +43,14 @@ public class CartFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        managmentCart = new ManagmentCart(requireContext());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCartBinding.inflate(inflater, container, false);
+        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        managmentCart = new ManagmentCart(getActivity(), uid);
         initList();
         return binding.getRoot();
     }
@@ -61,7 +64,7 @@ public class CartFragment extends Fragment {
     }
 
     private void initList() {
-        if(managmentCart.getListCart().isEmpty()){
+        if(managmentCart.getListCart(uid).isEmpty()){
             binding.emptyTxt.setVisibility(View.VISIBLE);
             binding.scrollViewCart.setVisibility(View.GONE);
         } else {
@@ -69,7 +72,7 @@ public class CartFragment extends Fragment {
             binding.scrollViewCart.setVisibility(View.VISIBLE);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
             binding.cardView.setLayoutManager(linearLayoutManager);
-            adapter = new CartAdapter(managmentCart.getListCart(), getActivity(), () -> calcularCarrito());
+            adapter = new CartAdapter(managmentCart.getListCart(uid), getActivity(), this::calcularCarrito);
             binding.cardView.setAdapter(adapter);
         }
     }

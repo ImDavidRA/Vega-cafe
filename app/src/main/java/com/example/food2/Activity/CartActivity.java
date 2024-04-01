@@ -22,6 +22,23 @@ import java.text.DecimalFormat;
 
 public class CartActivity extends BaseActivity {
 
+
+
+
+
+
+    // ESTE ES EL ACTIVITY, EN PRINCIPIO NO SE USARÁ MÁS, YA QUE TENEMOS EL FRAGMENT
+
+
+
+
+
+
+
+
+
+
+
     private ActivityCartBinding binding;
     private RecyclerView.Adapter adapter;
     private ManagmentCart managmentCart;
@@ -41,14 +58,15 @@ public class CartActivity extends BaseActivity {
             return insets;
         });
 
-        managmentCart = new ManagmentCart(this);
+        //managmentCart = new ManagmentCart(this);
 
-        setVariable();
-        calcularCarrito();
-        initList();
+        //setVariable();
+        //calcularCarrito();
+        //initList();
 
     }
 
+    /**
     private void initList() {
         if(managmentCart.getListCart().isEmpty()){
             binding.emptyTxt.setVisibility(View.VISIBLE);
@@ -92,4 +110,5 @@ public class CartActivity extends BaseActivity {
             }
         });
     }
+     */
 }

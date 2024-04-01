@@ -113,7 +113,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
-                managmentCart = new ManagmentCart(requireContext());
                 HomeFragment.this.startActivity(new Intent(HomeFragment.this.getActivity(), LoginActivity.class));
                 HomeFragment.this.requireActivity().finish();
             }

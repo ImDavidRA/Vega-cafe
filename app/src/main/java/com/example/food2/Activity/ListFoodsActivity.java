@@ -82,6 +82,7 @@ public class ListFoodsActivity extends BaseActivity {
                         binding.foodListView.setLayoutManager(new GridLayoutManager(ListFoodsActivity.this, 2));
                         adapterListFood = new FoodListAdapter(list);
                         binding.foodListView.setAdapter(adapterListFood);
+                        binding.foodListView.setAdapter(adapterListFood);
                     }
                     binding.progressBar3.setVisibility(View.GONE);
                 }
@@ -99,6 +100,8 @@ public class ListFoodsActivity extends BaseActivity {
         categoryName=getIntent().getStringExtra("CategoryName");
         searchText=getIntent().getStringExtra("text");
         isSearch=getIntent().getBooleanExtra("isSearch", false);
+
+
 
         binding.titleTxt.setText(categoryName);
         binding.backBtn.setOnClickListener(v -> finish());

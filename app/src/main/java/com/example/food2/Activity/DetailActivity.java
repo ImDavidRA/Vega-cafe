@@ -14,13 +14,16 @@ import com.example.food2.Domain.Foods;
 import com.example.food2.Helper.ManagmentCart;
 import com.example.food2.R;
 import com.example.food2.databinding.ActivityDetailBinding;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class DetailActivity extends BaseActivity {
 
     ActivityDetailBinding binding;
     private int num = 1;
+    private int nume;
     private Foods object;
     private ManagmentCart managmentCart;
+    private String uid;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,10 @@ public class DetailActivity extends BaseActivity {
             return insets;
         });
 
+        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        managmentCart = new ManagmentCart(this, uid);
+
         getWindow().setStatusBarColor(getResources().getColor(R.color.black));
         getIntentExtra();
         setVariable();
@@ -45,8 +52,6 @@ public class DetailActivity extends BaseActivity {
     }
 
     public void setVariable() {
-
-        managmentCart = new ManagmentCart(this);
 
         binding.backBtn.setOnClickListener(v -> finish());
 
@@ -74,8 +79,12 @@ public class DetailActivity extends BaseActivity {
         });
 
         binding.addBtn.setOnClickListener(v -> {
-            object.setNumberInCart(num);
+
+            nume = object.getNumberInCart();
+
+            object.setNumberInCart(nume+num);
             managmentCart.insertFood(object);
+
         });
 
     }
