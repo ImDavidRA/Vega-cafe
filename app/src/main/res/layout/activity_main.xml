@@ -25,7 +25,7 @@
                 android:layout_marginEnd="16dp">
 
                 <TextView
-                    android:id="@+id/textView9"
+                    android:id="@+id/bienvenida"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Welcome"
@@ -41,8 +41,8 @@
                     android:textColor="@color/blue"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/textView9"
-                    app:layout_constraintTop_toBottomOf="@+id/textView9" />
+                    app:layout_constraintStart_toStartOf="@+id/bienvenida"
+                    app:layout_constraintTop_toBottomOf="@+id/bienvenida" />
 
                 <ImageView
                     android:id="@+id/logoutBtn"

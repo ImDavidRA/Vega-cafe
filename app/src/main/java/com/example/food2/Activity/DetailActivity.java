@@ -18,8 +18,8 @@ import com.example.food2.databinding.ActivityDetailBinding;
 public class DetailActivity extends BaseActivity {
 
     ActivityDetailBinding binding;
-    private Foods object;
     private int num = 1;
+    private Foods object;
     private ManagmentCart managmentCart;
 
     @Override
@@ -44,7 +44,7 @@ public class DetailActivity extends BaseActivity {
 
     }
 
-    private void setVariable() {
+    public void setVariable() {
 
         managmentCart = new ManagmentCart(this);
 

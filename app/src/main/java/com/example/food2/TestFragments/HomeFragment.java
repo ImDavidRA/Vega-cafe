@@ -22,6 +22,8 @@ import com.example.food2.Adapter.CategoryAdapter;
 import com.example.food2.Domain.Category;
 import com.example.food2.Domain.Foods;
 import com.example.food2.Domain.Price;
+import com.example.food2.Domain.Users;
+import com.example.food2.Helper.ManagmentCart;
 import com.example.food2.R;
 import com.example.food2.databinding.FragmentHomeBinding;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,6 +40,8 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
     FirebaseDatabase database;
+    DatabaseReference usersRef;
+    private ManagmentCart managmentCart;
 
     public HomeFragment() {
     }
@@ -65,6 +69,7 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         database = FirebaseDatabase.getInstance();
+        usersRef = database.getReference("Users");
 
         setVariable();
         initPrice();
@@ -73,11 +78,45 @@ public class HomeFragment extends Fragment {
     }
 
     private void setVariable() {
+        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("Users");
 
-        binding.logoutBtn.setOnClickListener(v -> {
-            FirebaseAuth.getInstance().signOut();
-            startActivity(new Intent(getActivity(), LoginActivity.class));
-            requireActivity().finish();
+        // Obtén el ID del usuario actualmente autenticado
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        // Obtén una referencia al nodo del usuario actual con la clave específica generada previamente
+        DatabaseReference currentUserRef = usersRef.child(userId);
+
+        currentUserRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    // Obtén el nombre del usuario
+                    String userName = dataSnapshot.child("name").getValue(String.class);
+                    String lastNameC = dataSnapshot.child("lastName").getValue(String.class);
+
+                    String nombre = userName + " " + lastNameC;
+
+                    // Establece el nombre del usuario en el TextView userName
+                    binding.userName.setText(nombre);
+                } else {
+                    binding.userName.setText("Fallo");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Manejar errores si los hubiera
+            }
+        });
+
+        binding.logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                managmentCart = new ManagmentCart(requireContext());
+                HomeFragment.this.startActivity(new Intent(HomeFragment.this.getActivity(), LoginActivity.class));
+                HomeFragment.this.requireActivity().finish();
+            }
         });
         binding.searchBtn.setOnClickListener(v -> {
             String text = binding.searchEdt.getText().toString();
@@ -87,9 +126,6 @@ public class HomeFragment extends Fragment {
                 intent.putExtra("isSearch", true);
                 startActivity(intent);
             }
-        });
-        binding.cartBtn.setOnClickListener(v -> {
-            startActivity(new Intent(getActivity(), CartActivity.class));
         });
     }
 

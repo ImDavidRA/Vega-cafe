@@ -51,6 +51,8 @@ public class IntroActivity extends BaseActivity {
             }
         });
 
-        binding.registerBtn.setOnClickListener(v -> startActivity(new Intent(IntroActivity.this, RegistroActivity.class)));
+        binding.registerBtn.setOnClickListener(v -> {
+            startActivity(new Intent(IntroActivity.this, RegistroActivity.class));
+        });
     }
 }

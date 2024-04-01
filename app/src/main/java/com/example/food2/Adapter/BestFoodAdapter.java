@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.example.food2.Activity.DetailActivity;
 import com.example.food2.Domain.Foods;
+import com.example.food2.Helper.ManagmentCart;
 import com.example.food2.R;
 
 import java.util.ArrayList;
@@ -24,9 +26,12 @@ import java.util.ArrayList;
 public class BestFoodAdapter extends RecyclerView.Adapter<BestFoodAdapter.viewholder> {
     ArrayList<Foods> items;
     Context context;
+    private Foods object;
+    private ManagmentCart managmentCart;
 
     public BestFoodAdapter(ArrayList<Foods> items) {
         this.items = items;
+        this.managmentCart = managmentCart;
     }
 
     @NonNull
@@ -52,6 +57,12 @@ public class BestFoodAdapter extends RecyclerView.Adapter<BestFoodAdapter.viewho
             intent.putExtra("object", items.get(position));
             context.startActivity(intent);
         });
+
+        holder.dealAddBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
     }
 
     @Override
@@ -60,13 +71,14 @@ public class BestFoodAdapter extends RecyclerView.Adapter<BestFoodAdapter.viewho
     }
 
     public class viewholder extends RecyclerView.ViewHolder{
-        TextView titleTxt, priceTxt, starTxt, timeTxt;
+        TextView titleTxt, priceTxt, dealAddBtn; // Cambiado a TextView
         ImageView pic;
         public viewholder(@NonNull View itemView) {
             super(itemView);
             titleTxt=itemView.findViewById(R.id.titleTxt);
             priceTxt=itemView.findViewById(R.id.priceTxt);
             pic=itemView.findViewById(R.id.pic);
+            dealAddBtn=itemView.findViewById(R.id.dealAddBtn); // Cambiado a TextView
         }
     }
 }

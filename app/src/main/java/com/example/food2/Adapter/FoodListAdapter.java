@@ -40,7 +40,6 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.viewho
     @Override
     public void onBindViewHolder(@NonNull FoodListAdapter.viewholder holder, int position) {
         holder.titleTxt.setText(items.get(position).getTitle());
-        holder.timeTxt.setText(items.get(position).getTimeValue()+ " min");
         holder.priceTxt.setText(items.get(position).getPrice()+ " €");
 
         Glide.with(context)
@@ -61,14 +60,13 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.viewho
     }
 
     public class viewholder extends RecyclerView.ViewHolder {
-        TextView titleTxt, priceTxt, timeTxt;
+        TextView titleTxt, priceTxt;
         ImageView pic;
         public viewholder(@NonNull View itemView) {
             super(itemView);
 
             titleTxt = itemView.findViewById(R.id.titleTxt);
             priceTxt = itemView.findViewById(R.id.priceTxt);
-            timeTxt = itemView.findViewById(R.id.timeTxt);
 
             pic = itemView.findViewById(R.id.img);
         }

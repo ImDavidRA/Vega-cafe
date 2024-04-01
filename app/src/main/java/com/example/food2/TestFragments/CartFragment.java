@@ -48,7 +48,7 @@ public class CartFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCartBinding.inflate(inflater, container, false);
-        initList(); // Mueve la inicialización de la lista aquí
+        initList();
         return binding.getRoot();
     }
 
@@ -57,7 +57,6 @@ public class CartFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         database = FirebaseDatabase.getInstance();
-        setVariable();
         calcularCarrito();
     }
 
@@ -95,7 +94,5 @@ public class CartFragment extends Fragment {
         binding.totalTxt.setText(totalFormatted + "€");
     }
 
-    private void setVariable() {
-        binding.backBtn.setOnClickListener(v -> requireActivity().finish());
-    }
+
 }

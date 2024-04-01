@@ -25,10 +25,11 @@ public class ActivityPrincipal extends BaseActivity {
 
     MeowBottomNavigation bottomNavigation;
     RelativeLayout main_layout;
+    HomeFragment InicioFragment;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test);
+        setContentView(R.layout.activity_principal);
 
         EdgeToEdge.enable(this);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main_layout), (v, insets) -> {
@@ -36,6 +37,13 @@ public class ActivityPrincipal extends BaseActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        String idUser = getIntent().getStringExtra("clave_string");
+
+        HomeFragment InicioFragment = new HomeFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("clave_string", idUser);
+        InicioFragment.setArguments(bundle);
 
         replace(new HomeFragment());
 
@@ -67,32 +75,22 @@ public class ActivityPrincipal extends BaseActivity {
             public Unit invoke(MeowBottomNavigation.Model model) {
 
                 switch (model.getId()) {
-
                     case 1:
-
                         replace(new HomeFragment());
-
                         break;
 
                     case 2:
-
                         replace(new CartFragment());
-
                         break;
 
                     case 3:
-
                         replace(new ProfileFragment());
-
                         break;
 
                     case 4:
-
                         replace(new SettingsFragment());
-
                         break;
                 }
-
                 return null;
             }
         });
@@ -104,5 +102,7 @@ public class ActivityPrincipal extends BaseActivity {
         transaction.replace(R.id.frameLayout, f);
         transaction.commit();
     }
+
+
 
 }
