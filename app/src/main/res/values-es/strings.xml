@@ -1,11 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Vega-Cafe</string>
     <string name="bienvenidos">Bienvenidos</string>
-    <string name="fraseIntro">"Un café aromático, un delicioso bocata o una pizza recién horneada, encuéntralo todo aquí."</string>
+    <string name="fraseIntro">Un café aromático, un delicioso bocata o una pizza recién horneada, encuéntralo todo aquí.</string>
     <string name="iniciar_sesi_n">Iniciar Sesión</string>
     <string name="registrarse">Registrarse</string>
     <string name="correo_electr_nico">Correo Electrónico</string>
     <string name="contrase_a">Contraseña</string>
     <string name="contrase_a_olvidada">¿Contraseña Olvidada?</string>
-    <!-- TODO: Remove or change this placeholder text -->
 </resources>

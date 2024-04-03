@@ -39,8 +39,8 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.viewho
 
     @Override
     public void onBindViewHolder(@NonNull FoodListAdapter.viewholder holder, int position) {
-        holder.titleTxt.setText(items.get(position).getTitle());
-        holder.priceTxt.setText(items.get(position).getPrice()+ " €");
+        holder.titleTxt.setText((items.get(position).getTitle()).replace('.',','));
+        holder.priceTxt.setText((items.get(position).getPrice()+ " €").replace('.',','));
 
         Glide.with(context)
                 .load(items.get(position).getImagePath())

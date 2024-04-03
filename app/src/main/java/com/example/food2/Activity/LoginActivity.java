@@ -2,6 +2,7 @@ package com.example.food2.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -66,6 +67,21 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void setVariable() {
+
+        binding.forgotPassTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: Debes crear un popup para pedir introducir el email para reiniciar la password
+            }
+        });
+
+        binding.registTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, RegistroActivity.class));
+            }
+        });
+
         binding.loginBtn.setOnClickListener(v -> {
             String email = binding.userEdt.getText().toString();
             String password = binding.passwrdEdt.getText().toString();

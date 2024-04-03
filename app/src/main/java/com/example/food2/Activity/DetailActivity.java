@@ -59,31 +59,31 @@ public class DetailActivity extends BaseActivity {
                 .load(object.getImagePath())
                 .into(binding.pic);
 
-        binding.priceTxt.setText(object.getPrice()+"€");
+        binding.priceTxt.setText((object.getPrice()+"€").replace('.',','));
         binding.titleTxt.setText(object.getTitle());
         binding.descriptionTxt.setText(object.getDescription());
-        binding.totalTxt.setText(num*object.getPrice()+"€");
+        binding.totalTxt.setText((num*object.getPrice()+"€").replace('.',','));
 
-        binding.plusBtn.setOnClickListener(v -> {
-            num = num+1;
-            binding.numTxt.setText(num+"");
-            binding.totalTxt.setText((num*object.getPrice())+"€");
+        binding.plusBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                num = num + 1;
+                binding.numTxt.setText(num + "");
+                binding.totalTxt.setText(((num * object.getPrice()) + "€").replace('.',','));
+            }
         });
 
         binding.minusBtn.setOnClickListener(v -> {
             if(num>1) {
                 num=num-1;
                 binding.numTxt.setText(num+"");
-                binding.totalTxt.setText((num*object.getPrice())+"€");
+                binding.totalTxt.setText(((num*object.getPrice())+"€").replace('.',','));
             }
         });
 
         binding.addBtn.setOnClickListener(v -> {
 
-            nume = object.getNumberInCart();
-
-            object.setNumberInCart(nume+num);
-            managmentCart.insertFood(object);
+            managmentCart.insertFood(object, num);
 
         });
 

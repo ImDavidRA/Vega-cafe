@@ -95,7 +95,7 @@
                 />
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/forgotPassTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/contrase_a_olvidada"
@@ -207,7 +207,7 @@
                     />
 
                 <TextView
-                    android:id="@+id/textView8"
+                    android:id="@+id/registTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Registrate"

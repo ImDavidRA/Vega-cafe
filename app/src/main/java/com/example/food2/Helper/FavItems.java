@@ -4,19 +4,19 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.example.food2.Domain.Foods;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
+public class FavItems implements Serializable {
 
-public class ManagmentCart implements Serializable {
+    //TODO: MODIFICAR TODO LO REFERENTE AL CARRITO, CONVERTIR EN LISTA DE FAVORITOS
+
     private Context context;
     private TinyDB tinyDB;
     String userId;
 
-    public ManagmentCart(Context context, String userId) {
+    public FavItems(Context context, String userId) {
         tinyDB = new TinyDB(context);
 
         this.context = context;

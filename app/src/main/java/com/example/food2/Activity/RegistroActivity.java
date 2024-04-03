@@ -55,6 +55,14 @@ public class RegistroActivity extends BaseActivity {
     }
 
     private void setVariable() {
+
+        binding.logTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(RegistroActivity.this, LoginActivity.class));
+            }
+        });
+
         binding.RegistroBtn.setOnClickListener(v -> {
             String nombre = binding.nombreEdt.getText().toString();
             String apellido = binding.apellidoEdt.getText().toString();

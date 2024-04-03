@@ -42,7 +42,7 @@ public class BestFoodAdapter extends RecyclerView.Adapter<BestFoodAdapter.viewho
     @Override
     public void onBindViewHolder(@NonNull BestFoodAdapter.viewholder holder, int position) {
         holder.titleTxt.setText(items.get(position).getTitle());
-        holder.priceTxt.setText(items.get(position).getPrice() + "€");
+        holder.priceTxt.setText((items.get(position).getPrice() + "€").replace('.',','));
 
         Glide.with(context)
                 .load(items.get(position).getImagePath())
