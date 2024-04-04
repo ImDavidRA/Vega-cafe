@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Users implements Serializable {
 
-    final String UserPicPath_base = "https://firebasestorage.googleapis.com/v0/b/vega-cafe.appspot.com/o/userPics%2Fuser_pic.png?alt=media&token=df15ec4c-af9f-43f7-8fb8-20014f3b9d36";
+    final String UserPicPath_base = "https://firebasestorage.googleapis.com/v0/b/vega-cafe.appspot.com/o/userPics%2Fuser_pic.png?alt=media&token=393d1d40-eeff-4f67-b51f-4d0467241a22";
     private String Id;
     private String Name;
     private String LastName;
