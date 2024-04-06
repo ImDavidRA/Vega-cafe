@@ -28,7 +28,7 @@
                     android:id="@+id/bienvenida"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Bienvenido"
+                    android:text="@string/home_bienvenidaTxt"
                     android:textColor="@color/blue"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -40,6 +40,7 @@
                     android:text="usuario"
                     android:textColor="@color/blue"
                     android:textStyle="bold"
+                    android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/bienvenida"
                     app:layout_constraintTop_toBottomOf="@+id/bienvenida" />
@@ -78,7 +79,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/grey_background"
                         android:ems="10"
-                        android:hint="Buscar..."
+                        android:hint="@string/home_buscarTxt"
                         android:inputType="text"
                         android:padding="8dp"
                         android:textAlignment="center"
@@ -116,7 +117,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Top Ventas"
+                    android:text="@string/home_masVendidosTxt"
                     android:textColor="@color/blue"
                     android:textSize="22dp"
                     android:textStyle="bold" />
@@ -125,7 +126,7 @@
                     android:id="@+id/textView12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="VER TODO"
+                    android:text="@string/home_verTodoTxt"
                     android:textColor="@color/red"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -166,7 +167,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_weight="1"
-                android:text="Categorias"
+                android:text="@string/home_categoryTxt"
                 android:textColor="@color/blue"
                 android:textSize="22dp"
                 android:textStyle="bold" />

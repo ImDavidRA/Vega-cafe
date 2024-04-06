@@ -47,7 +47,7 @@ public class ProfileFragment extends Fragment {
     String userId;
     FragmentProfileBinding binding;
     Context context;
-    ImageView pic;
+    ImageView pic; //TODO: DEBES PONER ALGO PARA PODER CAMBIAR LA FOTO
     DatabaseReference userRef;
     Dialog dialogIdioma, dialogPass, dialogPerfil;
     Button cerrarDialogIdioma, cerrarDialogPass, aceptarDialogPass, aceptarDialogPerfil, cerrarDialogPerfil, o3, o2, o1;

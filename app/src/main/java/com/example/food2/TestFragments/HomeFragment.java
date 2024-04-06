@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.food2.Activity.CartActivity;
 import com.example.food2.Activity.ListFoodsActivity;
 import com.example.food2.Activity.LoginActivity;
 import com.example.food2.Adapter.BestFoodAdapter;
@@ -22,8 +21,6 @@ import com.example.food2.Adapter.CategoryAdapter;
 import com.example.food2.Domain.Category;
 import com.example.food2.Domain.Foods;
 import com.example.food2.Domain.Price;
-import com.example.food2.Domain.Users;
-import com.example.food2.Helper.ManagmentCart;
 import com.example.food2.R;
 import com.example.food2.databinding.FragmentHomeBinding;
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,7 +38,6 @@ public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
     FirebaseDatabase database;
     DatabaseReference usersRef;
-    private ManagmentCart managmentCart;
 
     public HomeFragment() {
     }
@@ -80,32 +76,26 @@ public class HomeFragment extends Fragment {
     private void setVariable() {
         DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("Users");
 
-        // Obtén el ID del usuario actualmente autenticado
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        // Obtén una referencia al nodo del usuario actual con la clave específica generada previamente
         DatabaseReference currentUserRef = usersRef.child(userId);
 
         currentUserRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    // Obtén el nombre del usuario
+
                     String userName = dataSnapshot.child("name").getValue(String.class);
-                    String lastNameC = dataSnapshot.child("lastName").getValue(String.class);
 
-                    String nombre = userName + " " + lastNameC;
-
-                    // Establece el nombre del usuario en el TextView userName
-                    binding.userName.setText(nombre);
+                    binding.userName.setText(userName);
                 } else {
-                    binding.userName.setText("Fallo");
+                    binding.userName.setText("Error");
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Manejar errores si los hubiera
+
             }
         });
 

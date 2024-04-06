@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/blue"
 
-        android:text="Su carrito está vacío"
+        android:text="@string/cart_emptyTxt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:gravity="center"
-            android:text="Pedido"
+            android:text="@string/cart_pedidoTxt"
             android:textColor="@color/blue"
             android:textSize="24sp"
 
@@ -68,7 +68,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:text="Resumen del Pedido"
+                        android:text="@string/cart_resumenTxt"
                         android:textColor="@color/blue"
                         android:textSize="18sp"
                         android:textStyle="bold"
@@ -91,7 +91,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="16dp"
-                            android:text="Subtotal"
+                            android:text="@string/cart_subtotalTxt"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -101,7 +101,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="Total Impuestos"
+                            android:text="@string/cart_totalTaxTxt"
                             app:layout_constraintStart_toStartOf="@+id/textView18"
                             app:layout_constraintTop_toBottomOf="@+id/textView18" />
 
@@ -143,7 +143,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="Total"
+                            android:text="@string/cart_totalTxt"
                             app:layout_constraintStart_toStartOf="@+id/textView22"
                             app:layout_constraintTop_toBottomOf="@+id/view4" />
 
@@ -170,7 +170,7 @@
                         android:layout_marginBottom="65dp"
                         android:background="@drawable/red_button_background"
                         android:elevation="3dp"
-                        android:text="Finalizar Pedido"
+                        android:text="@string/cart_finPedidoTxt"
                         android:textColor="@color/white"
 
                         android:textSize="18sp" />

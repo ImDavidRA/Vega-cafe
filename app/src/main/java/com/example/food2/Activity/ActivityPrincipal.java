@@ -1,5 +1,6 @@
 package com.example.food2.Activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -22,6 +23,8 @@ import com.example.food2.TestFragments.VerifyFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.ArrayList;
+
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 
@@ -30,6 +33,7 @@ public class ActivityPrincipal extends BaseActivity {
     MeowBottomNavigation bottomNavigation;
     RelativeLayout main_layout;
     String uidUser;
+    ArrayList<Integer> miArrayList = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,16 +61,13 @@ public class ActivityPrincipal extends BaseActivity {
             uidUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
             replace(new HomeFragment());
-
-            // Creamos objeto con el id bottomNavigation
+            miArrayList.add(1);
 
             bottomNavigation.setBackgroundColor(Color.parseColor("#00000000"));
             bottomNavigation.setBackgroundColor(Color.argb(0, 0, 0, 0));
 
-            // Default en el que iniciará
             bottomNavigation.show(1,true);
 
-            // Añadimos la cantidad de elementos que queremos que tenga la barra inferior
             bottomNavigation.add(new MeowBottomNavigation.Model(1,R.drawable.baseline_home_24));
             bottomNavigation.add(new MeowBottomNavigation.Model(2,R.drawable.baseline_shopping_cart_24));
             bottomNavigation.add(new MeowBottomNavigation.Model(4,R.drawable.baseline_favorite_24));
@@ -75,7 +76,6 @@ public class ActivityPrincipal extends BaseActivity {
             meowNavigation();
         }
     }
-
 
     private void meowNavigation() {
 
@@ -86,32 +86,61 @@ public class ActivityPrincipal extends BaseActivity {
                 switch (model.getId()) {
                     case 1:
                         replace(new HomeFragment());
+                        miArrayList.add(1);
                         break;
 
                     case 2:
                         replace(new CartFragment());
+                        miArrayList.add(2);
                         break;
 
                     case 3:
                         replace(new ProfileFragment());
+                        miArrayList.add(3);
                         break;
 
                     case 4:
                         replace(new FavsFragment());
+                        miArrayList.add(4);
                         break;
                 }
+
                 return null;
             }
         });
 
     } ////////////////////
 
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+
+            if (!miArrayList.isEmpty()) {
+                miArrayList.remove(miArrayList.size() - 1);
+            }
+
+            int num = !miArrayList.isEmpty() ? miArrayList.get(miArrayList.size() - 1) : 1;
+
+            setIcono(num);
+
+            getSupportFragmentManager().popBackStack();
+
+        } else {
+            startActivity(new Intent(ActivityPrincipal.this, LoginActivity.class));
+            finish();
+        }
+    }
+
     private void replace(Fragment f) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frameLayout, f);
+        transaction.addToBackStack(null);
+
         transaction.commit();
     }
 
-
+    private void setIcono(int num) {
+        bottomNavigation.show(num, true);
+    }
 
 }
