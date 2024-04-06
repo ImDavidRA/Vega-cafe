@@ -82,6 +82,7 @@ public class LoginActivity extends BaseActivity {
             }
         });
 
+
         binding.loginBtn.setOnClickListener(v -> {
             String email = binding.userEdt.getText().toString();
             String password = binding.passwrdEdt.getText().toString();
