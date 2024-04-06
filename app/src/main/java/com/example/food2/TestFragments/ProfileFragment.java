@@ -43,7 +43,6 @@ import com.google.firebase.database.ValueEventListener;
 
 public class ProfileFragment extends Fragment {
 
-    //TODO: Terminar de hacer el diseño antes de añadir funcionalidad
 
     String userId;
     FragmentProfileBinding binding;
@@ -72,12 +71,52 @@ public class ProfileFragment extends Fragment {
         context = getContext();
 
         userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
+
+        setVariable();
+
+    }
+
+    private void setVariable() {
+
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    // Obtener el nombre del usuario
+                    String userName = dataSnapshot.child("name").getValue(String.class);
+                    String lastNameC = dataSnapshot.child("lastName").getValue(String.class);
+
+                    String nombre = userName + " " + lastNameC;
+
+                    // Establece el nombre del usuario en el TextView userName
+                    binding.nameFirstnameTxt.setText(nombre);
+
+                    // Obtener el email del usuario
+                    String email = dataSnapshot.child("email").getValue(String.class);
+
+                    binding.emailTxt.setText(email);
+
+                } else {
+                    binding.nameFirstnameTxt.setText("Usuario");
+                    binding.emailTxt.setText("Email");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                binding.nameFirstnameTxt.setText("Error");
+                binding.emailTxt.setText("Error");
+            }
+        });
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         pic = binding.userPic;
+        pic.bringToFront();
+
+
 
         ////////////// PRUEBAS DIALOG //////////////
 
@@ -355,7 +394,7 @@ public class ProfileFragment extends Fragment {
                     Glide.with(context)
                             .load(imageURL)
                             .transform(new CircleCrop(), new FitCenter())
-                            .override(700, 520)
+                            .override(500, 500)
                             .into(pic);
                 }
             }

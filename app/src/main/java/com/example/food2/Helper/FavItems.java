@@ -13,75 +13,43 @@ public class FavItems implements Serializable {
     //TODO: MODIFICAR TODO LO REFERENTE AL CARRITO, CONVERTIR EN LISTA DE FAVORITOS
 
     private Context context;
-    private TinyDB tinyDB;
+    private TinyDBFav tinyDBFav;
     String userId;
+    ArrayList<Foods> favList;
 
     public FavItems(Context context, String userId) {
-        tinyDB = new TinyDB(context);
+        tinyDBFav = new TinyDBFav(context);
 
         this.context = context;
 
         this.userId = userId;
     }
 
-    //////
-    public void insertFood(Foods food, int quantity) {
-        ArrayList<Foods> currentCart = getListCart(userId);
-        boolean existAlready = false;
-        int n = 0;
-        for (int i = 0; i < currentCart.size(); i++) {
-            if (currentCart.get(i).getTitle().equals(food.getTitle())) {
-                existAlready = true;
-                n = i;
-                break;
+    public void insertFav(Foods food) {
+        ArrayList<Foods> favList = getListFav(userId);
+
+        if (existAlready(food)) {
+            favList.remove(food);
+            Toast.makeText(context, "Eliminado de Favoritos", Toast.LENGTH_SHORT).show();
+        } else {
+            favList.add(food);
+            Toast.makeText(context, "Añadido a Favoritos", Toast.LENGTH_SHORT).show();
+        }
+        tinyDBFav.putListObject(userId + "_fav", favList);
+    }
+
+    public boolean existAlready(Foods food) {
+        ArrayList<Foods> favList = getListFav(userId);
+        for (int i = 0; i < favList.size(); i++) {
+            if (favList.get(i).getTitle().equals(food.getTitle())) {
+                return true;
             }
         }
-        if (existAlready) {
-            int newQuantity = currentCart.get(n).getNumberInCart() + quantity;
-            currentCart.get(n).setNumberInCart(newQuantity);
-            Toast.makeText(context, "Añadido otro", Toast.LENGTH_SHORT).show();
-        } else {
-            food.setNumberInCart(quantity); // Establecer la cantidad directamente
-            currentCart.add(food);
-            Toast.makeText(context, "Añadido al Carrito", Toast.LENGTH_SHORT).show();
-        }
-        tinyDB.putListObject(userId + "_cart", currentCart);
+        return false;
     }
 
-    //////
-
-    public ArrayList<Foods> getListCart(String userId) {
-        return tinyDB.getListObject(userId + "_cart");
+    public ArrayList<Foods> getListFav(String userId) {
+        return tinyDBFav.getListObject(userId + "_fav");
     }
 
-    public Double getTotalFee(){
-        ArrayList<Foods> listItem = getListCart(userId);
-        double fee=0;
-        for (int i = 0; i < listItem.size(); i++) {
-            fee=fee+(listItem.get(i).getPrice()*listItem.get(i).getNumberInCart());
-        }
-        return fee;
-    }
-    public void minusNumberItem(ArrayList<Foods> listItem,int position,ChangeNumberItemsListener changeNumberItemsListener){
-
-        if(listItem.get(position).getNumberInCart()==1){
-
-            listItem.remove(position);
-
-        }else{
-
-            listItem.get(position).setNumberInCart(listItem.get(position).getNumberInCart()-1);
-
-        }
-
-        tinyDB.putListObject(userId + "_cart",listItem);
-        changeNumberItemsListener.change();
-    }
-    public  void plusNumberItem(ArrayList<Foods> listItem,int position,ChangeNumberItemsListener changeNumberItemsListener){
-
-        listItem.get(position).setNumberInCart(listItem.get(position).getNumberInCart()+1);
-        tinyDB.putListObject(userId + "_cart",listItem);
-        changeNumberItemsListener.change();
-
-    }
 }

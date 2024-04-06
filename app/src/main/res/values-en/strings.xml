@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Vega-Cafe</string>
+    <string name="app_name">Vega-Café</string>
     <string name="bienvenidos">Welcome</string>
     <string name="fraseIntro">An aromatic coffee, a delicious sandwich or a freshly baked pizza, find it all here.</string>
     <string name="iniciar_sesi_n">Log In</string>

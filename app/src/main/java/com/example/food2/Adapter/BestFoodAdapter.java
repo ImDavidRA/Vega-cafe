@@ -20,12 +20,15 @@ import com.example.food2.Activity.DetailActivity;
 import com.example.food2.Domain.Foods;
 import com.example.food2.Helper.ManagmentCart;
 import com.example.food2.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
 public class BestFoodAdapter extends RecyclerView.Adapter<BestFoodAdapter.viewholder> {
     ArrayList<Foods> items;
     Context context;
+    private String uid;
+    private ManagmentCart managmentCart;
 
     public BestFoodAdapter(ArrayList<Foods> items) {
         this.items = items;
@@ -58,6 +61,12 @@ public class BestFoodAdapter extends RecyclerView.Adapter<BestFoodAdapter.viewho
         holder.dealAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                managmentCart = new ManagmentCart(context, uid);
+
+                managmentCart.insertFood(items.get(position), 1);
+
             }
         });
     }

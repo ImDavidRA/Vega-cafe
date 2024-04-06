@@ -65,7 +65,6 @@ public class TinyDB {
             bitmapFromPath = BitmapFactory.decodeFile(path);
 
         } catch (Exception e) {
-            // TODO: handle exception
             e.printStackTrace();
         }
 
@@ -334,7 +333,7 @@ public class TinyDB {
         ArrayList<Foods> playerList =  new ArrayList<Foods>();
 
         for(String jObjString : objStrings){
-            Foods player  = gson.fromJson(jObjString,  Foods.class);
+            Foods player  = gson.fromJson(jObjString, Foods.class);
             playerList.add(player);
         }
         return playerList;

@@ -85,6 +85,17 @@ public class RegistroActivity extends BaseActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
+
+                                FirebaseUser user = mAuth.getCurrentUser();
+
+                                user.sendEmailVerification();
+
+                                /**
+                                 * TODO: TERMINAR LA CONFIGURACIÓN DEL EMAIL DE VERIFICACIÓN,
+                                 * COMPROBAR SI LLEGA EL CORREO, SI NO LLEGA NO REGISTRES AL USER
+                                  */
+
+
                                 // Registro exitoso
                                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
                                 String userId = ref.push().getKey();

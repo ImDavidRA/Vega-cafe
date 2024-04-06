@@ -2,6 +2,7 @@ package com.example.food2.Activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.RelativeLayout;
 
 import androidx.activity.EdgeToEdge;
@@ -16,8 +17,10 @@ import com.example.food2.R;
 import com.example.food2.TestFragments.CartFragment;
 import com.example.food2.TestFragments.HomeFragment;
 import com.example.food2.TestFragments.ProfileFragment;
-import com.example.food2.TestFragments.SettingsFragment;
+import com.example.food2.TestFragments.FavsFragment;
+import com.example.food2.TestFragments.VerifyFragment;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
@@ -27,7 +30,7 @@ public class ActivityPrincipal extends BaseActivity {
     MeowBottomNavigation bottomNavigation;
     RelativeLayout main_layout;
     String uidUser;
-    HomeFragment InicioFragment;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,28 +43,37 @@ public class ActivityPrincipal extends BaseActivity {
             return insets;
         });
 
-        uidUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-        replace(new HomeFragment());
-
+        FirebaseUser user = mAuth.getCurrentUser();
         main_layout = findViewById(R.id.main_layout);
 
-        // Creamos objeto con el id bottomNavigation
         bottomNavigation = findViewById(R.id.bottomNavigation);
-        bottomNavigation.setBackgroundColor(Color.parseColor("#00000000"));
-        bottomNavigation.setBackgroundColor(Color.argb(0, 0, 0, 0));
 
-        // Default en el que iniciará
-        bottomNavigation.show(1,true);
+        if (!user.isEmailVerified()) {
 
-        // Añadimos la cantidad de elementos que queremos que tenga la barra inferior
-        bottomNavigation.add(new MeowBottomNavigation.Model(1,R.drawable.baseline_home_24));
-        bottomNavigation.add(new MeowBottomNavigation.Model(2,R.drawable.baseline_shopping_cart_24));
-        bottomNavigation.add(new MeowBottomNavigation.Model(3,R.drawable.baseline_person_24));
-        bottomNavigation.add(new MeowBottomNavigation.Model(4,R.drawable.baseline_settings_24));
+            replace(new VerifyFragment());
+            bottomNavigation.setVisibility(View.GONE);
 
-        meowNavigation();
+        } else {
+            uidUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
+            replace(new HomeFragment());
+
+            // Creamos objeto con el id bottomNavigation
+
+            bottomNavigation.setBackgroundColor(Color.parseColor("#00000000"));
+            bottomNavigation.setBackgroundColor(Color.argb(0, 0, 0, 0));
+
+            // Default en el que iniciará
+            bottomNavigation.show(1,true);
+
+            // Añadimos la cantidad de elementos que queremos que tenga la barra inferior
+            bottomNavigation.add(new MeowBottomNavigation.Model(1,R.drawable.baseline_home_24));
+            bottomNavigation.add(new MeowBottomNavigation.Model(2,R.drawable.baseline_shopping_cart_24));
+            bottomNavigation.add(new MeowBottomNavigation.Model(4,R.drawable.baseline_favorite_24));
+            bottomNavigation.add(new MeowBottomNavigation.Model(3,R.drawable.baseline_person_24));
+
+            meowNavigation();
+        }
     }
 
 
@@ -85,7 +97,7 @@ public class ActivityPrincipal extends BaseActivity {
                         break;
 
                     case 4:
-                        replace(new SettingsFragment());
+                        replace(new FavsFragment());
                         break;
                 }
                 return null;

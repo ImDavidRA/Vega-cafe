@@ -24,7 +24,6 @@ import java.text.DecimalFormat;
 public class CartFragment extends Fragment {
 
     private FragmentCartBinding binding;
-    private FirebaseDatabase database;
     private RecyclerView.Adapter adapter;
     private ManagmentCart managmentCart;
     private double impuesto;
@@ -59,7 +58,6 @@ public class CartFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        database = FirebaseDatabase.getInstance();
         calcularCarrito();
     }
 
@@ -87,7 +85,6 @@ public class CartFragment extends Fragment {
 
         DecimalFormat df = new DecimalFormat("#.##");
         df.setMinimumFractionDigits(2);
-        df.setMaximumFractionDigits(2);
 
         String itemTotalFormatted = df.format(managmentCart.getTotalFee());
         String impuestoFormatted = df.format(impuesto);

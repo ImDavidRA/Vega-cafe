@@ -11,6 +11,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
 import com.example.food2.Domain.Foods;
+import com.example.food2.Helper.FavItems;
 import com.example.food2.Helper.ManagmentCart;
 import com.example.food2.R;
 import com.example.food2.databinding.ActivityDetailBinding;
@@ -20,9 +21,9 @@ public class DetailActivity extends BaseActivity {
 
     ActivityDetailBinding binding;
     private int num = 1;
-    private int nume;
     private Foods object;
     private ManagmentCart managmentCart;
+    private FavItems favList;
     private String uid;
 
     @Override
@@ -43,6 +44,7 @@ public class DetailActivity extends BaseActivity {
 
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
+        favList = new FavItems(this, uid);
         managmentCart = new ManagmentCart(this, uid);
 
         getWindow().setStatusBarColor(getResources().getColor(R.color.black));
@@ -85,6 +87,13 @@ public class DetailActivity extends BaseActivity {
 
             managmentCart.insertFood(object, num);
 
+        });
+
+        binding.favBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                favList.insertFav(object);
+            }
         });
 
     }
