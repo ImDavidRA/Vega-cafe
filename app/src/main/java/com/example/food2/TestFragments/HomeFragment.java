@@ -24,6 +24,7 @@ import com.example.food2.Domain.Price;
 import com.example.food2.R;
 import com.example.food2.databinding.FragmentHomeBinding;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,6 +39,8 @@ public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
     FirebaseDatabase database;
     DatabaseReference usersRef;
+    FirebaseUser user;
+    String useruid;
 
     public HomeFragment() {
     }
@@ -57,6 +60,15 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        useruid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        String email = user.getEmail();
+
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(useruid);
+        userRef.child("email").setValue(email);
+
         return binding.getRoot();
     }
 

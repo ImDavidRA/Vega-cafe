@@ -3,7 +3,6 @@ package com.example.food2.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.RelativeLayout;
 
 import androidx.activity.EdgeToEdge;
@@ -19,7 +18,6 @@ import com.example.food2.TestFragments.CartFragment;
 import com.example.food2.TestFragments.HomeFragment;
 import com.example.food2.TestFragments.ProfileFragment;
 import com.example.food2.TestFragments.FavsFragment;
-import com.example.food2.TestFragments.VerifyFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -47,34 +45,28 @@ public class ActivityPrincipal extends BaseActivity {
             return insets;
         });
 
-        FirebaseUser user = mAuth.getCurrentUser();
         main_layout = findViewById(R.id.main_layout);
 
         bottomNavigation = findViewById(R.id.bottomNavigation);
 
-        if (!user.isEmailVerified()) {
 
-            replace(new VerifyFragment());
-            bottomNavigation.setVisibility(View.GONE);
+        uidUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        } else {
-            uidUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        replace(new HomeFragment());
+        miArrayList.add(1);
 
-            replace(new HomeFragment());
-            miArrayList.add(1);
+        bottomNavigation.setBackgroundColor(Color.parseColor("#00000000"));
+        bottomNavigation.setBackgroundColor(Color.argb(0, 0, 0, 0));
 
-            bottomNavigation.setBackgroundColor(Color.parseColor("#00000000"));
-            bottomNavigation.setBackgroundColor(Color.argb(0, 0, 0, 0));
+        bottomNavigation.show(1,true);
 
-            bottomNavigation.show(1,true);
+        bottomNavigation.add(new MeowBottomNavigation.Model(1,R.drawable.baseline_home_24));
+        bottomNavigation.add(new MeowBottomNavigation.Model(2,R.drawable.baseline_shopping_cart_24));
+        bottomNavigation.add(new MeowBottomNavigation.Model(4,R.drawable.baseline_favorite_24));
+        bottomNavigation.add(new MeowBottomNavigation.Model(3,R.drawable.baseline_person_24));
 
-            bottomNavigation.add(new MeowBottomNavigation.Model(1,R.drawable.baseline_home_24));
-            bottomNavigation.add(new MeowBottomNavigation.Model(2,R.drawable.baseline_shopping_cart_24));
-            bottomNavigation.add(new MeowBottomNavigation.Model(4,R.drawable.baseline_favorite_24));
-            bottomNavigation.add(new MeowBottomNavigation.Model(3,R.drawable.baseline_person_24));
+        meowNavigation();
 
-            meowNavigation();
-        }
     }
 
     private void meowNavigation() {

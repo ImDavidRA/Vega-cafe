@@ -1,12 +1,17 @@
 package com.example.food2.Activity;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -16,6 +21,7 @@ import com.example.food2.databinding.ActivityLoginBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends BaseActivity {
 
@@ -39,7 +45,32 @@ public class LoginActivity extends BaseActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            startActivity(new Intent(LoginActivity.this, ActivityPrincipal.class));
+                            FirebaseUser user = mAuth.getCurrentUser();
+
+                            if (user.isEmailVerified()) {
+                                startActivity(new Intent(LoginActivity.this, ActivityPrincipal.class));
+                            } else {
+
+                                Context context = LoginActivity.this;
+
+                                Dialog dialogVerify = new Dialog(context);
+                                dialogVerify.setContentView(R.layout.pop_up_verifica_email);
+                                dialogVerify.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                dialogVerify.getWindow().setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.custom_dialog_bg));
+                                dialogVerify.setCancelable(false);
+
+                                Button cerrarDialogVerify = dialogVerify.findViewById(R.id.confirmPop);
+
+                                dialogVerify.show();
+
+                                cerrarDialogVerify.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        dialogVerify.dismiss();
+                                    }
+                                });
+
+                            }
                         } else {
                             Toast.makeText(LoginActivity.this, "Credenciales erroneas", Toast.LENGTH_SHORT).show();
                         }

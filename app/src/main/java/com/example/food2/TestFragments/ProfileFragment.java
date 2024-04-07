@@ -19,7 +19,6 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.bitmap.FitCenter;
-import com.example.food2.Activity.ListFoodsActivity;
 import com.example.food2.Activity.LoginActivity;
 import com.example.food2.Activity.RegistroActivity;
 import com.example.food2.R;
@@ -43,11 +42,11 @@ import com.google.firebase.database.ValueEventListener;
 
 public class ProfileFragment extends Fragment {
 
-
     String userId;
     FragmentProfileBinding binding;
     Context context;
     ImageView pic; //TODO: DEBES PONER ALGO PARA PODER CAMBIAR LA FOTO
+    FirebaseUser user;
     DatabaseReference userRef;
     Dialog dialogIdioma, dialogPass, dialogPerfil;
     Button cerrarDialogIdioma, cerrarDialogPass, aceptarDialogPass, aceptarDialogPerfil, cerrarDialogPerfil, o3, o2, o1;
@@ -69,6 +68,8 @@ public class ProfileFragment extends Fragment {
 
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         context = getContext();
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
         userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
 
@@ -92,7 +93,7 @@ public class ProfileFragment extends Fragment {
                     binding.nameFirstnameTxt.setText(nombre);
 
                     // Obtener el email del usuario
-                    String email = dataSnapshot.child("email").getValue(String.class);
+                    String email = user.getEmail();
 
                     binding.emailTxt.setText(email);
 
@@ -116,7 +117,7 @@ public class ProfileFragment extends Fragment {
         pic = binding.userPic;
         pic.bringToFront();
 
-
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         ////////////// PRUEBAS DIALOG //////////////
 
@@ -203,10 +204,6 @@ public class ProfileFragment extends Fragment {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
                                                     Toast.makeText(context, "Nombre actualizado exitosamente", Toast.LENGTH_SHORT).show();
-                                                    FirebaseAuth.getInstance().signOut();
-                                                    Intent intent = new Intent(getActivity(), LoginActivity.class);
-                                                    ProfileFragment.this.requireActivity().finish();
-                                                    startActivity(intent);
                                                 }
                                             })
                                             .addOnFailureListener(new OnFailureListener() {
@@ -228,10 +225,6 @@ public class ProfileFragment extends Fragment {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
                                                     Toast.makeText(context, "Apellido actualizado exitosamente", Toast.LENGTH_SHORT).show();
-                                                    FirebaseAuth.getInstance().signOut();
-                                                    Intent intent = new Intent(getActivity(), LoginActivity.class);
-                                                    ProfileFragment.this.requireActivity().finish();
-                                                    startActivity(intent);
                                                 }
                                             })
                                             .addOnFailureListener(new OnFailureListener() {
@@ -251,21 +244,39 @@ public class ProfileFragment extends Fragment {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
-                                                DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
-                                                userRef.child("email").setValue(newEmail)
-                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                            @Override
-                                                            public void onSuccess(Void aVoid) {
-                                                                Toast.makeText(context, "Email actualizado exitosamente", Toast.LENGTH_SHORT).show();
-                                                                FirebaseAuth.getInstance().signOut();
-                                                            }
-                                                        });
+                                                Context context = getContext();
+
+                                                Dialog dialogVerify = new Dialog(context);
+                                                dialogVerify.setContentView(R.layout.pop_up_verifica_email);
+                                                dialogVerify.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                                dialogVerify.getWindow().setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.custom_dialog_bg));
+                                                dialogVerify.setCancelable(false);
+
+                                                Button cerrarDialogVerify = dialogVerify.findViewById(R.id.confirmPop);
+
+                                                dialogVerify.show();
+
+                                                cerrarDialogVerify.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        dialogVerify.dismiss();
+
+                                                        FirebaseAuth.getInstance().signOut();
+
+                                                        Intent intent = new Intent(getActivity(), LoginActivity.class);
+                                                        ProfileFragment.this.requireActivity().finish();
+                                                        startActivity(intent);
+                                                    }
+                                                });
                                             } else {
                                                 Toast.makeText(context, "Error al actualizar el email", Toast.LENGTH_SHORT).show();
                                             }
                                         }
                                     });
                                 }
+
+                                // HASTA AQUI LO DE CAMBIAR EMAIL
+
                             } else {
                                 Toast.makeText(context, "Error con su contraseña", Toast.LENGTH_SHORT).show();
                             }
@@ -307,7 +318,12 @@ public class ProfileFragment extends Fragment {
                     return;
                 }
 
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (!passAcept(newPass)) {
+                    Toast.makeText(context, "La contraseña debe tener al menos 6 carácteres, una mayúscula y una minúscula", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
 
                 AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(), passActual);
 
@@ -406,4 +422,25 @@ public class ProfileFragment extends Fragment {
 
         return binding.getRoot();
     }
+
+    private boolean passAcept(String pass) {
+        if (pass.length() >= 6) {
+            boolean hasUppercase = false;
+            boolean hasLowercase = false;
+
+            for (int i = 0; i < pass.length(); i++) {
+                char c = pass.charAt(i);
+                if (Character.isUpperCase(c)) {
+                    hasUppercase = true;
+                } else if (Character.isLowerCase(c)) {
+                    hasLowercase = true;
+                }
+            }
+
+            return hasUppercase && hasLowercase;
+        }
+
+        return false;
+    }
+
 }
