@@ -19,6 +19,12 @@
             android:name=".Activity.ActivityPrincipal"
             android:exported="false">
         </activity>
+
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+
         <activity
             android:name=".Activity.DetailActivity"
             android:exported="false" />

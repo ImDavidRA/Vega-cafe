@@ -1,10 +1,15 @@
 package com.example.food2.TestFragments;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,21 +19,25 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.bitmap.FitCenter;
+import com.example.food2.Activity.ActivityPrincipal;
 import com.example.food2.Activity.LoginActivity;
 import com.example.food2.Activity.RegistroActivity;
 import com.example.food2.R;
 import androidx.core.content.ContextCompat;
 
 import com.example.food2.databinding.FragmentProfileBinding;
+import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,6 +47,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.yalantis.ucrop.UCrop;
+
+import java.io.File;
+import java.util.UUID;
 
 
 public class ProfileFragment extends Fragment {
@@ -48,8 +63,10 @@ public class ProfileFragment extends Fragment {
     ImageView pic; //TODO: DEBES PONER ALGO PARA PODER CAMBIAR LA FOTO
     FirebaseUser user;
     DatabaseReference userRef;
+    StorageReference storageRef;
     Dialog dialogIdioma, dialogPass, dialogPerfil;
     Button cerrarDialogIdioma, cerrarDialogPass, aceptarDialogPass, aceptarDialogPerfil, cerrarDialogPerfil, o3, o2, o1;
+    FloatingActionButton swapPicBtn;
 
 
     public ProfileFragment() {
@@ -117,7 +134,16 @@ public class ProfileFragment extends Fragment {
         pic = binding.userPic;
         pic.bringToFront();
 
+
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        pic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         ////////////// PRUEBAS DIALOG //////////////
 
@@ -401,7 +427,6 @@ public class ProfileFragment extends Fragment {
 
             }
         });
-
         userRef.child("userPicPath").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -410,7 +435,7 @@ public class ProfileFragment extends Fragment {
                     Glide.with(context)
                             .load(imageURL)
                             .transform(new CircleCrop(), new FitCenter())
-                            .override(500, 500)
+                            .override(550, 550)
                             .into(pic);
                 }
             }
@@ -420,7 +445,30 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        swapPicBtn = binding.picSwapBtn;
+
+        swapPicBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImagePicker.with(getActivity())
+                        .crop()
+                        .start();
+            }
+        });
+
         return binding.getRoot();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
+            final Uri resultUri = UCrop.getOutput(data);
+
+            pic.setImageURI(resultUri);
+
+        } else if (resultCode == UCrop.RESULT_ERROR) {
+            final Throwable cropError = UCrop.getError(data);
+        }
     }
 
     private boolean passAcept(String pass) {
