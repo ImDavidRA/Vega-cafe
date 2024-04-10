@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -16,6 +17,13 @@ import com.example.food2.Helper.ManagmentCart;
 import com.example.food2.R;
 import com.example.food2.databinding.ActivityDetailBinding;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Locale;
 
 public class DetailActivity extends BaseActivity {
 
@@ -23,6 +31,7 @@ public class DetailActivity extends BaseActivity {
     private int num = 1;
     private Foods object;
     private ManagmentCart managmentCart;
+    DatabaseReference itemRef;
     private FavItems favList;
     private String uid;
 
@@ -47,6 +56,8 @@ public class DetailActivity extends BaseActivity {
         favList = new FavItems(this, uid);
         managmentCart = new ManagmentCart(this, uid);
 
+
+
         getWindow().setStatusBarColor(getResources().getColor(R.color.black));
         getIntentExtra();
         setVariable();
@@ -54,6 +65,42 @@ public class DetailActivity extends BaseActivity {
     }
 
     public void setVariable() {
+
+        // PRUEBA PARA COGER LA INFO EN INGLÉS O ESPAÑOL DE CADA PRODUCTO
+
+        // TODO: AFINAR ESTO
+        itemRef = FirebaseDatabase.getInstance().getReference().child("Foods");
+
+        itemRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    DataSnapshot foodSnapshot = snapshot.child("0"); // TODO: PRUEBA CON EL ELEMENTO 0 MODIFICAR LUEGO
+                    String description;
+
+                    String language = Locale.getDefault().getLanguage();
+                    if (language.equals("es") && foodSnapshot.child("texts").child("ESP").exists()) {
+
+                        description = foodSnapshot.child("texts").child("ESP").child("desc").getValue(String.class);
+
+
+                    } else {
+
+                        description = foodSnapshot.child("texts").child("ENG").child("desc").getValue(String.class);
+
+                    }
+
+                    binding.descriptionTxt.setText(description);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Manejar evento de cancelación si es necesario
+            }
+        });
+
+        // FIN PRUEBA
 
         binding.backBtn.setOnClickListener(v -> finish());
 
@@ -63,7 +110,6 @@ public class DetailActivity extends BaseActivity {
 
         binding.priceTxt.setText((object.getPrice()+"€").replace('.',','));
         binding.titleTxt.setText(object.getTitle());
-        binding.descriptionTxt.setText(object.getDescription());
         binding.totalTxt.setText((num*object.getPrice()+"€").replace('.',','));
 
         binding.plusBtn.setOnClickListener(new View.OnClickListener() {
