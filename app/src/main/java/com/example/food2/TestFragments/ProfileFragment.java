@@ -26,6 +26,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.bitmap.FitCenter;
 import com.example.food2.Activity.ActivityPrincipal;
+import com.example.food2.Activity.AlmacenActivity;
 import com.example.food2.Activity.LoginActivity;
 import com.example.food2.Activity.RegistroActivity;
 import com.example.food2.R;
@@ -65,7 +66,7 @@ public class ProfileFragment extends Fragment {
     DatabaseReference userRef;
     StorageReference storageRef;
     Dialog dialogIdioma, dialogPass, dialogPerfil;
-    Button cerrarDialogIdioma, cerrarDialogPass, aceptarDialogPass, aceptarDialogPerfil, cerrarDialogPerfil, o3, o2, o1;
+    Button cerrarDialogIdioma, cerrarDialogPass, aceptarDialogPass, aceptarDialogPerfil, cerrarDialogPerfil, o3, o2, o1, stockControl;
     FloatingActionButton swapPicBtn;
 
 
@@ -175,6 +176,7 @@ public class ProfileFragment extends Fragment {
         o1 = binding.o1;
         o2 = binding.o2;
         o3 = binding.o3;
+        stockControl = binding.stockControl;
         // Botones del perfil
 
         // Botones de cerrar de los pop-ups
@@ -187,6 +189,14 @@ public class ProfileFragment extends Fragment {
         aceptarDialogPass = dialogPass.findViewById(R.id.confirmPop);
         aceptarDialogPerfil = dialogPerfil.findViewById(R.id.confirmPop);
         // Botones de aceptar de los pop-ups
+
+        stockControl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ProfileFragment.this.startActivity(new Intent(ProfileFragment.this.getActivity(), AlmacenActivity.class));
+                ProfileFragment.this.requireActivity();
+            }
+        });
 
         aceptarDialogPerfil.setOnClickListener(new View.OnClickListener() {
             @Override

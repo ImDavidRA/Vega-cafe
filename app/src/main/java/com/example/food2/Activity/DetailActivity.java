@@ -56,8 +56,6 @@ public class DetailActivity extends BaseActivity {
         favList = new FavItems(this, uid);
         managmentCart = new ManagmentCart(this, uid);
 
-
-
         getWindow().setStatusBarColor(getResources().getColor(R.color.black));
         getIntentExtra();
         setVariable();
