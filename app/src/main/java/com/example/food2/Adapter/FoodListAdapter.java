@@ -17,13 +17,20 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.food2.Activity.DetailActivity;
 import com.example.food2.Domain.Foods;
 import com.example.food2.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.viewholder> {
 
     ArrayList<Foods> items;
     Context context;
+    DatabaseReference itemRef;
 
     public FoodListAdapter(ArrayList<Foods> items) {
         this.items = items;
@@ -39,7 +46,37 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.viewho
 
     @Override
     public void onBindViewHolder(@NonNull FoodListAdapter.viewholder holder, int position) {
-        holder.titleTxt.setText((items.get(position).getTitle()).replace('.',','));
+        itemRef = FirebaseDatabase.getInstance().getReference().child("Foods");
+
+        itemRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    DataSnapshot foodSnapshot = snapshot.child(String.valueOf(items.get(position).getId()));
+                    String titulo;
+
+                    String language = Locale.getDefault().getLanguage();
+                    if (language.equals("es") && foodSnapshot.child("texts").child("ESP").exists()) {
+
+                        titulo = foodSnapshot.child("texts").child("ESP").child("name").getValue(String.class);
+
+
+
+                    } else {
+
+                        titulo = foodSnapshot.child("texts").child("ESP").child("name").getValue(String.class);
+
+                    }
+
+                    holder.titleTxt.setText(titulo);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Manejar evento de cancelación si es necesario
+            }
+        });
         holder.priceTxt.setText((items.get(position).getPrice()+ " €").replace('.',','));
 
         Glide.with(context)

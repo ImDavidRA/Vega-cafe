@@ -19,12 +19,19 @@ import com.example.food2.Helper.FavItems;
 import com.example.food2.Helper.ManagmentCart;
 import com.example.food2.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class FavAdapter extends RecyclerView.Adapter<FavAdapter.viewholder> {
 
     ArrayList<Foods> list;
+    DatabaseReference itemRef;
     private FavItems favItems;
     int num = 1;
     ManagmentCart managmentCart;
@@ -52,7 +59,38 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.viewholder> {
 
     @Override
     public void onBindViewHolder(@NonNull FavAdapter.viewholder holder, int position) {
-        holder.title.setText(list.get(position).getTitle());
+
+        itemRef = FirebaseDatabase.getInstance().getReference().child("Foods");
+
+        itemRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    DataSnapshot foodSnapshot = snapshot.child(String.valueOf(list.get(position).getId()));
+                    String titulo;
+
+                    String language = Locale.getDefault().getLanguage();
+                    if (language.equals("es") && foodSnapshot.child("texts").child("ESP").exists()) {
+
+                        titulo = foodSnapshot.child("texts").child("ESP").child("name").getValue(String.class);
+
+
+
+                    } else {
+
+                        titulo = foodSnapshot.child("texts").child("ESP").child("name").getValue(String.class);
+
+                    }
+
+                    holder.title.setText(titulo);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Manejar evento de cancelación si es necesario
+            }
+        });
 
         holder.totalEachItem.setText(((num+" x "+(list.get(position).getPrice())+"€")).replace('.',','));
         holder.numItemTxt.setText(num+"");

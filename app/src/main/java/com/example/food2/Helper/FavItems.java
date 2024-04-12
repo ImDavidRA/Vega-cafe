@@ -41,7 +41,7 @@ public class FavItems implements Serializable {
     public boolean existAlready(Foods food) {
         ArrayList<Foods> favList = getListFav(userId);
         for (int i = 0; i < favList.size(); i++) {
-            if (favList.get(i).getTitle().equals(food.getTitle())) {
+            if (favList.get(i).getId() == (food.getId())) {
                 return true;
             }
         }

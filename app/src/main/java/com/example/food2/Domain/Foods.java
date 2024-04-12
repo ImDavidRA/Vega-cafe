@@ -4,20 +4,54 @@ import java.io.Serializable;
 
 public class Foods implements Serializable {
     private int CategoryId;
-    private String Description;
     private boolean BestFood;
     private int Id;
     private double Price;
+    private String descENG;
+    private String nameENG;
+    private String descESP;
+    private String nameESP;
     private String ImagePath;
-    private String Title;
     private int numberInCart;
+
+    public String getDescENG() {
+        return descENG;
+    }
+
+    public void setDescENG(String descENG) {
+        this.descENG = descENG;
+    }
+
+    public String getNameENG() {
+        return nameENG;
+    }
+
+    public void setNameENG(String nameENG) {
+        this.nameENG = nameENG;
+    }
+
+    public String getDescESP() {
+        return descESP;
+    }
+
+    public void setDescESP(String descESP) {
+        this.descESP = descESP;
+    }
+
+    public String getNameESP() {
+        return nameESP;
+    }
+
+    public void setNameESP(String nameESP) {
+        this.nameESP = nameESP;
+    }
 
     public Foods() {
     }
 
     @Override
     public String toString() {
-        return Title;
+        return nameESP;
     }
 
     public int getCategoryId() {
@@ -26,14 +60,6 @@ public class Foods implements Serializable {
 
     public void setCategoryId(int categoryId) {
         CategoryId = categoryId;
-    }
-
-    public String getDescription() {
-        return Description;
-    }
-
-    public void setDescription(String description) {
-        Description = description;
     }
 
     public boolean isBestFood() {
@@ -66,14 +92,6 @@ public class Foods implements Serializable {
 
     public void setImagePath(String imagePath) {
         ImagePath = imagePath;
-    }
-
-    public String getTitle() {
-        return Title;
-    }
-
-    public void setTitle(String title) {
-        Title = title;
     }
 
     public int getNumberInCart() {

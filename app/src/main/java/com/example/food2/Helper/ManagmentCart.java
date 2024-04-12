@@ -30,7 +30,7 @@ public class ManagmentCart implements Serializable {
         boolean existAlready = false;
         int n = 0;
         for (int i = 0; i < currentCart.size(); i++) {
-            if (currentCart.get(i).getTitle().equals(food.getTitle())) {
+            if (currentCart.get(i).getId() == (food.getId())) {
                 existAlready = true;
                 n = i;
                 break;

@@ -66,41 +66,43 @@ public class DetailActivity extends BaseActivity {
 
     public void setVariable() {
 
-        // PRUEBA PARA COGER LA INFO EN INGLÉS O ESPAÑOL DE CADA PRODUCTO
+        // TODO: HACER ESTO EN LOS DEMÁS ACTIVITY QUE SE VEAN TÍTULOS Y OTRAS COSAS ASÍ
 
-        // TODO: AFINAR ESTO
         itemRef = FirebaseDatabase.getInstance().getReference().child("Foods");
 
         itemRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    DataSnapshot foodSnapshot = snapshot.child("0"); // TODO: PRUEBA CON EL ELEMENTO 0 MODIFICAR LUEGO
+                    DataSnapshot foodSnapshot = snapshot.child(String.valueOf(object.getId()));
                     String description;
+                    String titulo;
 
                     String language = Locale.getDefault().getLanguage();
                     if (language.equals("es") && foodSnapshot.child("texts").child("ESP").exists()) {
 
                         description = foodSnapshot.child("texts").child("ESP").child("desc").getValue(String.class);
+                        titulo = foodSnapshot.child("texts").child("ESP").child("name").getValue(String.class);
+
 
 
                     } else {
 
                         description = foodSnapshot.child("texts").child("ENG").child("desc").getValue(String.class);
+                        titulo = foodSnapshot.child("texts").child("ESP").child("name").getValue(String.class);
 
                     }
 
                     binding.descriptionTxt.setText(description);
+                    binding.titleTxt.setText(titulo);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // Manejar evento de cancelación si es necesario
+
             }
         });
-
-        // FIN PRUEBA
 
         binding.backBtn.setOnClickListener(v -> finish());
 
@@ -109,7 +111,6 @@ public class DetailActivity extends BaseActivity {
                 .into(binding.pic);
 
         binding.priceTxt.setText((object.getPrice()+"€").replace('.',','));
-        binding.titleTxt.setText(object.getTitle());
         binding.totalTxt.setText((num*object.getPrice()+"€").replace('.',','));
 
         binding.plusBtn.setOnClickListener(new View.OnClickListener() {
