@@ -63,7 +63,7 @@ public class ListFoodsActivity extends BaseActivity {
         Query query;
         if(isSearch) {
             String sub = searchText.substring(0,1).toUpperCase();
-            searchText = searchText.substring(1,searchText.length());
+            searchText = searchText.substring(1);
 
             searchText = sub+searchText;
 
