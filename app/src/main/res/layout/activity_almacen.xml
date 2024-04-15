@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="230dp"
 
-        android:text="@string/cart_emptyTxt"
+        android:text="VACIO"
         android:textColor="@color/blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -99,11 +99,7 @@
                         android:clipToPadding="false"
                         android:padding="16dp" />
                 </LinearLayout>
-                <![CDATA[
 
-                />
-
-            ]]>
             </LinearLayout>
         </ScrollView>
 
@@ -138,7 +134,7 @@
                         android:drawableTint="@color/white"
                         android:elevation="3dp"
                         android:ems="10"
-                        android:text="@string/editPerfilTxt"
+                        android:text="Editar Precio"
                         android:textColor="@color/white"
                         android:textSize="16sp"
                         android:textStyle="bold"
@@ -161,8 +157,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="220dp"
-                        app:srcCompat="@drawable/baseline_create_24"
-                        tools:srcCompat="@drawable/baseline_create_24" />
+                        app:srcCompat="@drawable/baseline_euro_40"
+                        tools:srcCompat="@drawable/baseline_euro_40" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -188,7 +184,7 @@
                         android:drawableTint="@color/white"
                         android:elevation="3dp"
                         android:ems="10"
-                        android:text="@string/passEditTxt"
+                        android:text="Editar Textos"
                         android:textColor="@color/white"
                         android:textSize="16sp"
                         android:textStyle="bold"
@@ -211,8 +207,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="220dp"
-                        app:srcCompat="@drawable/baseline_key_48"
-                        tools:srcCompat="@drawable/baseline_key_48" />
+                        app:srcCompat="@drawable/baseline_short_text_24"
+                        tools:srcCompat="@drawable/baseline_short_text_24" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -238,7 +234,7 @@
                         android:drawableTint="@color/white"
                         android:elevation="3dp"
                         android:ems="10"
-                        android:text="@string/profile_idiomaTxt"
+                        android:text="Editar Imagen"
                         android:textColor="@color/white"
                         android:textSize="16sp"
                         android:textStyle="bold"
@@ -261,8 +257,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="220dp"
-                        app:srcCompat="@drawable/baseline_language_24"
-                        tools:srcCompat="@drawable/baseline_language_24" />
+                        app:srcCompat="@drawable/baseline_image_40"
+                        tools:srcCompat="@drawable/baseline_image_40" />
                 </LinearLayout>
 
             </LinearLayout>
