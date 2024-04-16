@@ -24,11 +24,11 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class AlmacenActivity extends BaseActivity {
 
     ActivityAlmacenBinding binding;
-    private boolean isSearch;
     String text;
     private String searchText;
     private RecyclerView.Adapter adapterListFood;
@@ -69,16 +69,23 @@ public class AlmacenActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                text = binding.searchEdt.getText().toString();
-                searchText = text;
 
-                initList();
+                binding.emptyTxt.setVisibility(View.VISIBLE);
+                binding.cardView.setVisibility(View.GONE);
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                binding.emptyTxt.setVisibility(View.GONE);
+
+                text = binding.searchEdt.getText().toString();
+                searchText = text;
+
+                initList();
+
                 binding.cardView.setVisibility(View.VISIBLE);
+                binding.emptyTxt.setVisibility(View.GONE);
+
             }
         });
 
@@ -90,16 +97,27 @@ public class AlmacenActivity extends BaseActivity {
         ArrayList<Foods> list = new ArrayList<>();
 
         Query query;
-        if(isSearch) {
+
+        if (binding.searchEdt.length()>0) {
             String sub = searchText.substring(0,1).toUpperCase();
             searchText = searchText.substring(1);
 
             searchText = sub+searchText;
-
-            query = myRef.orderByChild("Title").startAt(searchText).endAt(searchText+'\uf8ff');
         } else {
-            query = myRef.orderByChild("Title").startAt(searchText).endAt(searchText+'\uf8ff');
+            searchText = "";
         }
+
+        String language = Locale.getDefault().getLanguage();
+        if (language.equals("es")) {
+
+            query = myRef.orderByChild("texts/ESP/name").startAt(searchText).endAt(searchText+'\uf8ff');
+
+        } else {
+
+            query = myRef.orderByChild("texts/ENG/name").startAt(searchText).endAt(searchText+'\uf8ff');
+
+        }
+
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -108,10 +126,10 @@ public class AlmacenActivity extends BaseActivity {
                         list.add(issue.getValue(Foods.class));
                     }
                     if(list.size()>0) {
-                        binding.foodListView.setLayoutManager(new GridLayoutManager(AlmacenActivity.this, 1));
+                        binding.cardView.setLayoutManager(new GridLayoutManager(AlmacenActivity.this, 2));
                         adapterListFood = new FoodListAdapter(list);
-                        binding.foodListView.setAdapter(adapterListFood);
-                        binding.foodListView.setAdapter(adapterListFood);
+                        binding.cardView.setAdapter(adapterListFood);
+                        binding.cardView.setAdapter(adapterListFood);
                     }
                     binding.emptyTxt.setVisibility(View.GONE);
                 }

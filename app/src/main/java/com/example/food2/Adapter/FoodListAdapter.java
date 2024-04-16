@@ -64,7 +64,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.viewho
 
                     } else {
 
-                        titulo = foodSnapshot.child("texts").child("ESP").child("name").getValue(String.class);
+                        titulo = foodSnapshot.child("texts").child("ENG").child("name").getValue(String.class);
 
                     }
 

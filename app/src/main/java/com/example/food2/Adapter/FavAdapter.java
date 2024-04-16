@@ -78,7 +78,7 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.viewholder> {
 
                     } else {
 
-                        titulo = foodSnapshot.child("texts").child("ESP").child("name").getValue(String.class);
+                        titulo = foodSnapshot.child("texts").child("ENG").child("name").getValue(String.class);
 
                     }
 

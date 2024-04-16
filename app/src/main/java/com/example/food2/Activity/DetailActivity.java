@@ -82,12 +82,10 @@ public class DetailActivity extends BaseActivity {
                         description = foodSnapshot.child("texts").child("ESP").child("desc").getValue(String.class);
                         titulo = foodSnapshot.child("texts").child("ESP").child("name").getValue(String.class);
 
-
-
                     } else {
 
                         description = foodSnapshot.child("texts").child("ENG").child("desc").getValue(String.class);
-                        titulo = foodSnapshot.child("texts").child("ESP").child("name").getValue(String.class);
+                        titulo = foodSnapshot.child("texts").child("ENG").child("name").getValue(String.class);
 
                     }
 

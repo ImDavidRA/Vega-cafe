@@ -72,7 +72,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.viewholder> {
 
                     } else {
 
-                        titulo = foodSnapshot.child("texts").child("ESP").child("name").getValue(String.class);
+                        titulo = foodSnapshot.child("texts").child("ENG").child("name").getValue(String.class);
 
                     }
 
