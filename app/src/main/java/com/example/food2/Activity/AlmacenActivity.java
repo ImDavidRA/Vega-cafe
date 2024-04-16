@@ -13,7 +13,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.food2.Adapter.FoodListAdapter;
+import com.example.food2.Adapter.EditProductAdapter;
 import com.example.food2.Domain.Foods;
 import com.example.food2.R;
 import com.example.food2.databinding.ActivityAlmacenBinding;
@@ -127,7 +127,7 @@ public class AlmacenActivity extends BaseActivity {
                     }
                     if(list.size()>0) {
                         binding.cardView.setLayoutManager(new GridLayoutManager(AlmacenActivity.this, 2));
-                        adapterListFood = new FoodListAdapter(list);
+                        adapterListFood = new EditProductAdapter(list);
                         binding.cardView.setAdapter(adapterListFood);
                         binding.cardView.setAdapter(adapterListFood);
                     }
