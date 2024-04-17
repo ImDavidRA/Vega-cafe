@@ -55,9 +55,6 @@ public class AlmacenActivity extends BaseActivity {
 
         // TODO: CREAR UN AJAX PARA EL BUSCADOR
 
-        binding.emptyTxt.setVisibility(View.VISIBLE);
-        binding.emptyTxt.setText("ANTES");
-        binding.cardView.setVisibility(View.GONE);
 
         binding.searchEdt.addTextChangedListener(new TextWatcher() {
             @Override
@@ -93,7 +90,6 @@ public class AlmacenActivity extends BaseActivity {
 
     private void initList() {
         DatabaseReference myRef = database.getReference("Foods");
-        binding.emptyTxt.setVisibility(View.VISIBLE);
         ArrayList<Foods> list = new ArrayList<>();
 
         Query query;
