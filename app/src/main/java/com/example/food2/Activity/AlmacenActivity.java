@@ -1,12 +1,15 @@
 package com.example.food2.Activity;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -32,6 +35,7 @@ public class AlmacenActivity extends BaseActivity {
     String text;
     private String searchText;
     private RecyclerView.Adapter adapterListFood;
+    Dialog dialogProduct;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,7 +58,13 @@ public class AlmacenActivity extends BaseActivity {
     private void setVariable() {
 
         // TODO: CREAR UN AJAX PARA EL BUSCADOR
+        text = binding.searchEdt.getText().toString();
+        searchText = text;
 
+        initList();
+
+        binding.cardView.setVisibility(View.VISIBLE);
+        binding.emptyTxt.setVisibility(View.GONE);
 
         binding.searchEdt.addTextChangedListener(new TextWatcher() {
             @Override

@@ -20,7 +20,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="25dp"
             android:layout_marginEnd="32dp"
-            android:text="@string/editPerfilTxt"
+            android:text="Editar Producto"
             android:textColor="@color/blue"
             android:textSize="30sp"
             android:textStyle="bold"

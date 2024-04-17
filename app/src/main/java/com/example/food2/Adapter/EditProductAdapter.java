@@ -1,14 +1,17 @@
 package com.example.food2.Adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -31,7 +34,8 @@ public class EditProductAdapter extends RecyclerView.Adapter<EditProductAdapter.
     ArrayList<Foods> items;
     Context context;
     DatabaseReference itemRef;
-
+    Dialog dialogProduct;
+    Button cerrarDialogProduct;
     public EditProductAdapter(ArrayList<Foods> items) {
         this.items = items;
     }
@@ -47,6 +51,35 @@ public class EditProductAdapter extends RecyclerView.Adapter<EditProductAdapter.
     @Override
     public void onBindViewHolder(@NonNull EditProductAdapter.viewholder holder, int position) {
         itemRef = FirebaseDatabase.getInstance().getReference().child("Foods");
+
+        // ---------------- DIALOG PRODUCT ---------------- //
+
+        dialogProduct = new Dialog(context);
+        dialogProduct.setContentView(R.layout.pop_up_edit_product);
+        dialogProduct.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialogProduct.getWindow().setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.custom_dialog_bg));
+        dialogProduct.setCancelable(false);
+
+        cerrarDialogProduct = dialogProduct.findViewById(R.id.cancelPop);
+
+        cerrarDialogProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogProduct.dismiss();
+            }
+        });
+
+        holder.itemView.setOnClickListener(v -> {
+            dialogProduct.show();
+        });
+        holder.editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogProduct.show();
+            }
+        });
+
+        // ---------------- DIALOG PRODUCT ---------------- //
 
         itemRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -84,11 +117,6 @@ public class EditProductAdapter extends RecyclerView.Adapter<EditProductAdapter.
                 .transform(new CenterCrop(), new RoundedCorners(30))
                 .into(holder.pic);
 
-        holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, DetailActivity.class);
-            intent.putExtra("object", items.get(position));
-            context.startActivity(intent);
-        });
     }
 
     @Override
@@ -98,10 +126,12 @@ public class EditProductAdapter extends RecyclerView.Adapter<EditProductAdapter.
 
     public class viewholder extends RecyclerView.ViewHolder {
         TextView titleTxt, priceTxt;
+        Button editBtn;
         ImageView pic;
         public viewholder(@NonNull View itemView) {
             super(itemView);
 
+            editBtn = itemView.findViewById(R.id.editBtn);
             titleTxt = itemView.findViewById(R.id.titleTxt);
             priceTxt = itemView.findViewById(R.id.priceTxt);
 
