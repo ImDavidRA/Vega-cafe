@@ -1,1 +1,1 @@
-Funcionalidad solo disponible en Android
+Sin terminar
